@@ -63,6 +63,9 @@ function ingresarPulsado(){
 
 }
 
+function cargarDatosIndex(){  
+  menu = document.getElementById('menu').innerHTML
+}
 
 function cargarDatos(){
     document.getElementById("iban").value = cuentaBancaria.iban
