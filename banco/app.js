@@ -10,6 +10,20 @@ class Banco{
   }
 }
 
+class Persona{
+  nombre
+  pApe
+  sApe
+  nacionalidad
+
+  constructor(nombre,pApe,sApe,nacionalidad){
+    this.nombre = nombre
+    this.pApe = pApe
+    this.sApe = sApe
+    this.nacionalidad = nacionalidad
+  }
+}
+
 class Tarjeta{
   numero
   cvv
@@ -49,6 +63,9 @@ function ingresarPulsado(){
 
 }
 
+function cargarDatosIndex(){  
+  menu = document.getElementById('menu').innerHTML
+}
 
 function cargarDatos(){
     document.getElementById("iban").value = cuentaBancaria.iban
@@ -89,22 +106,30 @@ function compareLogin() {
     mensajeError.textContent = "";
     mensajeError2.textContent = "";
     mensajeError3.textContent = "";
-    mensajeError4.textContent = "";
+    mensajeError4.textContent = "";   
+    var valido = 0 
 
 
     if (nombre != '' && apellido1 != '' && apellido2 != '' && nacionalidad != '') {
 
         if (validlength(nombre, 20, 3) !== "") { 
             mensajeError.textContent =("El campo nombre " + validlength(nombre,  20, 3)) 
-        }
+        }else{valido++}
         if (validlength(apellido1, 20, 3) !== "") { 
             mensajeError2.textContent =("El campo apellido1 " + validlength(apellido1, 20, 3)) 
-        }
+        }else{valido++}
         if (validlength(apellido2, 20, 3) !== "") { 
             mensajeError3.textContent =("El campo apellido2 " + validlength(apellido2, 20, 3)) 
-        }
+        }else{valido++}
         if (validlength(nacionalidad, 15, 3) !== "") { 
             mensajeError4.textContent = ("El campo nacionalidad" + validlength(nacionalidad, 15, 3)) 
+        }else{valido++}
+
+        if(valido == 4){
+          var persona = new Persona(nombre,apellido1,apellido2,nacionalidad)
+          mensajeError.style.color = "green"
+          mensajeError.textContent = "Guardado los datos correctamente."
+          console.log(persona)
         }
 
 
