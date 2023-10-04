@@ -30,12 +30,14 @@
         <label for="nacionalidad">Nacionalidad:</label>
         <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Escribe tu nacionalidad" required><br><br>
 
-        <button type="button" id="modificar">Modificar Datos</button>
+        <button  type="button" onclick="compareLogin()" id="modificar">Modificar Datos</button>
     </form>
 
-    <div id="resultado">
-        <!-- Aquí se mostrarán los resultados de la modificación -->
-    </div>
+    <div id="mensaje_error" style="color: red;"></div>
+    <div id="mensaje_error2" style="color: red;"></div>
+    <div id="mensaje_error3" style="color: red;"></div>
+    <div id="mensaje_error4" style="color: red;"></div>
+
 <script src="app.js">
 
     
