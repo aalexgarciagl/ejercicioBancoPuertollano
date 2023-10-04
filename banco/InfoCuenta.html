@@ -16,12 +16,12 @@
 
     <h1>Informacion de la cuenta</h1>
     
-    IBAN: <input type="text" disabled="true"> <br>
-    Saldo: <input type="text" disabled="true">
+    IBAN: <input type="text" disabled="true" id="iban" style="width: 200px;"> <br>
+    Saldo: <input type="text" disabled="true" id="saldo" style="width: 100px;">
     <br><br>
 
-    <input type="text" placeholder="Saldo a retirar"> <button>Retirar</button> <br><br>
-    <input type="text" placeholder="Saldo a ingresar"> <button>Ingresar</button>
+    <input type="text" placeholder="Saldo a retirar" id="saldoRetirar"> <button onclick="retirarPulsado()">Retirar</button> <br><br>
+    <input type="text" placeholder="Saldo a ingresar" id="saldoIngresar"> <button onclick="ingresarPulsado()">Ingresar</button>
 
     <p id="avisoDineroIngresado/Retirado"></p>
         
@@ -29,6 +29,7 @@
 
 <script src="app.js">    
 </script>
+
 <script>
     cargarDatos()
 </script>
