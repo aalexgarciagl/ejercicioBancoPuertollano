@@ -60,7 +60,17 @@ function retirarPulsado(){
 }
 
 function ingresarPulsado(){
-
+  var saldoIngresar = document.getElementById("saldoIngresar").value 
+  var aviso = document.getElementById("avisoDineroIngresado/Retirado")
+  if(/^\d+(\.\d+)?$/.test(saldoIngresar)){       
+    aviso.style.color = "green"
+    aviso.innerText = "Dinero ingresado correctamente: "+saldoIngresar
+    cuentaBancaria.saldo = parseInt(cuentaBancaria.saldo)+parseInt(saldoIngresar)
+    cargarDatos()     
+  }else{
+    aviso.style.color = "red"
+    aviso.innerText = "Debes introducir un numero positivo."
+  }   
 }
 
 function cargarDatosIndex(){  
