@@ -29,14 +29,19 @@ var cuentaBancaria = new Banco("ES24 1111 2222 33 4444444444",500,[])
 function retirarPulsado(){
   var saldoRetirar = document.getElementById("saldoRetirar").value 
   var aviso = document.getElementById("avisoDineroIngresado/Retirado")
-  if(saldoRetirar>cuentaBancaria.saldo){
-    aviso.style.color = "red";
-    aviso.innerText = "Saldo insuficiente."
+  if(/^\d+(\.\d+)?$/.test(saldoRetirar)){    
+    if(saldoRetirar>cuentaBancaria.saldo){
+      aviso.style.color = "red";
+      aviso.innerText = "Saldo insuficiente."
+    }else{
+      aviso.style.color = "green"
+      aviso.innerText = "Dinero retirado correctamente: "+saldoRetirar
+      cuentaBancaria.saldo -= saldoRetirar
+      cargarDatos() 
+    }
   }else{
-    aviso.style.color = "green"
-    aviso.innerText = "Dinero retirado correctamente: "+saldoRetirar
-    cuentaBancaria.saldo -= saldoRetirar
-    cargarDatos() 
+    aviso.style.color = "red"
+    aviso.innerText = "Debes introducir un numero positivo."
   }
 }
 
