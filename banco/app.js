@@ -36,6 +36,14 @@ class Tarjeta{
   }
 }
 
+function focusIngresar(){
+  document.getElementById("saldoRetirar").value = ""
+}
+
+function focusRetirar(){
+  document.getElementById("saldoIngresar").value = ""
+}
+
 
 
 var cuentaBancaria = new Banco("ES24 1111 2222 33 4444444444",500,[]) 
