@@ -128,7 +128,8 @@ function compareLogin() {
         if(valido == 4){
           var persona = new Persona(nombre,apellido1,apellido2,nacionalidad)
           mensajeError.style.color = "green"
-          mensajeError.textContent = "Datos guardados en objeto persona."
+          mensajeError.textContent = "Guardado los datos correctamente."
+          console.log(persona)
         }
 
 
