@@ -10,6 +10,20 @@ class Banco{
   }
 }
 
+class Persona{
+  nombre
+  pApe
+  sApe
+  nacionalidad
+
+  constructor(nombre,pApe,sApe,nacionalidad){
+    this.nombre = nombre
+    this.pApe = pApe
+    this.sApe = sApe
+    this.nacionalidad = nacionalidad
+  }
+}
+
 class Tarjeta{
   numero
   cvv
