@@ -6,11 +6,32 @@
 </head>
 <body>
     <div id="menu">
-       
+        <h1>BancoPuertollano</h1>
+        <ul >
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="infoCuenta.html">Información Cuenta</a></li>
+            <li><a href="tarjetas.html">Tarjetas</a></li>
+        </ul>
     </div>
-    
 
- </body>
- 
- 
- </html>
+    <h1>Informacion de la cuenta</h1>
+    
+    IBAN: <input type="text" disabled="true"> <br>
+    Saldo: <input type="text" disabled="true">
+    <br><br>
+
+    <input type="text" placeholder="Saldo a retirar"> <button>Retirar</button> <br><br>
+    <input type="text" placeholder="Saldo a ingresar"> <button>Ingresar</button>
+
+    <p id="avisoDineroIngresado/Retirado"></p>
+        
+
+
+<script src="app.js">    
+</script>
+<script>
+    cargarDatos()
+</script>
+
+</body>
+</html>
