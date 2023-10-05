@@ -1,3 +1,5 @@
+/*CSS infoCuenta*/
+
 #menu li {
     display:inline;
     padding-left:3px;
@@ -7,4 +9,22 @@
     font-family:Arial;
     font-weight:bold;
     font-size:13px;
+}
+
+
+/*CSS tarjetas*/
+
+#columnas {
+    margin-left:85px ;
+    font-family:Arial;
+    font-weight:bold;
+    font-size:12px;
+}
+
+#columnas {
+    display: flex;
+}
+
+.columna {
+    width: 130px;
 }
