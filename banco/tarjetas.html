@@ -6,7 +6,43 @@
 </head>
 <body>
     <div id="menu">
-       
+        <h1>BancoPuertollano</h1>
+        <ul >
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="infoCuenta.html">Información Cuenta</a></li>
+            <li><a href="tarjetas.html">Tarjetas</a></li>
+        </ul>
+    </div>
+    <h2>Gestión de Tarjetas</h2>
+    <div id="tarjetas"> 
+        <div id="columnas"> 
+                <div class="columna">
+                    <p>Número de Cuenta</p>
+                </div>
+                <div class="columna">
+                    <p>Número de Tarjeta</p>
+                </div>
+                <div class="columna">
+                    <p>Activa  </p>
+                </div>
+        </div>
+        <p id="fila1">ES21 1465 0100 72 2030876293  1234 12345 123456  Si</p>
+        <p id="fila2">ES21 1465 0100 72 2030876293  1234 12345 123456  No</p>
+    </div>
+
+    <h2>Agregar Tarjetas</h2>
+    <form id="tarjeta-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="cvv">CVV:</label>
+        <input type="password" id="cvv" name="cvv" required><br><br>
+
+        <label for="activa">Activar:</label>
+        <input type="checkbox" id="activa" name="activa"><br><br>
+
+        <button type="button" id="guardar">Guardar Tarjeta</button>
+    </form>
     </div>
     
 </body>
