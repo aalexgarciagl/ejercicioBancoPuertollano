@@ -1,28 +1,29 @@
 //Clases
 class Cuenta{
-    iban
-    saldo
-    tarjetas 
-  
-    constructor(iban,saldo,tarjetas){
-      this.iban = iban
-      this.saldo = saldo
-      this.tarjetas = tarjetas
-    }
+  iban
+  saldo
+  tarjetas 
+    
 
-    getIban(){
-      return this.iban
-    }
-
-    setSaldo(saldo){
-      this.saldo = saldo
-    }
-
-    agregarTarjeta(tarjeta){
-      this.tarjetas.push(tarjeta)
-    } 
-
+  constructor(iban,saldo,tarjetas){
+    this.iban = iban
+    this.saldo = saldo
+    this.tarjetas = tarjetas
   }
+
+  getIban(){
+    return this.iban
+  }
+
+  setSaldo(saldo){
+    this.saldo = saldo
+  }
+
+  agregarTarjeta(tarjeta){
+    this.tarjetas.push(tarjeta)
+  } 
+
+}
   
   
   class Persona{
@@ -38,21 +39,7 @@ class Cuenta{
       this.nacionalidad = nacionalidad
       this.cuentaBancaria = cuentaBancaria
     }
-
-    setNombre(nombre){
-      this.nombre = nombre
-    }
-
-    setPApe(pApe){
-      this.pApe = pApe
-    }
-
-    setSApe(sApe){
-      this.sApe = sApe
-    }
-    setNacionalidad(nacionalidad){
-      this.nacionalidad = nacionalidad
-    }
+    
     
   }
   
@@ -78,11 +65,17 @@ function crearCuenta() {
   var cuentaBancaria = new Cuenta("ES21 1465 0100 72 2030876293",500,[tarjetaInicial1,tarjetaInicial2]) 
   return cuentaBancaria
 }
-cuentaBancaria = crearCuenta()
+var cuentaBancaria = crearCuenta()
 var persona = new Persona("Lolito","Fernandez","Gill","Sueco",cuentaBancaria)
 
 
   //index.html
+
+  function cargarDatosIndex(){  
+    mostrarUsuario() 
+    menu = document.getElementById('menu').innerHTML
+  }
+  
 
   function mostrarUsuario(){
     document.getElementById("nombre").value = persona.nombre
@@ -92,12 +85,16 @@ var persona = new Persona("Lolito","Fernandez","Gill","Sueco",cuentaBancaria)
   }
 
   function modificarUsuario(){
-    var nombre = document.getElementById('nombre').value
-    var apellido1 = document.getElementById('apellido1').value
-    var apellido2 = document.getElementById('apellido2').value
-    var nacionalidad = document.getElementById('nacionalidad').value
+    var nombre = document.getElementById('nombre').value     
+    var apellido1 = document.getElementById('apellido1').value 
+    var apellido2 = document.getElementById('apellido2').value 
+    var nacionalidad = document.getElementById('nacionalidad').value 
     const mensajeError = document.getElementById("mensaje_error")
     if(validarCampos(nombre,apellido1,apellido2,nacionalidad)){   
+      persona.nombre = nombre
+      persona.pApe = apellido1
+      persona.sApe = apellido2
+      persona.nacionalidad = nacionalidad
       mensajeError.style.color = "green"
       mensajeError.textContent = "Guardado los datos correctamente."
       console.log(persona)
@@ -107,11 +104,12 @@ var persona = new Persona("Lolito","Fernandez","Gill","Sueco",cuentaBancaria)
 
 
 
-function validarCampos(nombre,apellido1,apellido2,nacionalidad) {
+function validarCampos(nombre,apellido1,apellido2,nacionalidad) {  
     const mensajeError = document.getElementById("mensaje_error")
     const mensajeError2 = document.getElementById("mensaje_error2")
     const mensajeError3 = document.getElementById("mensaje_error3")
     const mensajeError4 = document.getElementById("mensaje_error4")
+    mensajeError.style.color = "red"
     mensajeError.textContent = ""
     mensajeError2.textContent = ""
     mensajeError3.textContent = ""
@@ -137,7 +135,7 @@ function validarCampos(nombre,apellido1,apellido2,nacionalidad) {
             mensajeError4.textContent = ("El campo nacionalidad" + validlength(nacionalidad, 15, 3)) 
             fallos++
         }
-        agregarTarjetaIniciales(nombre,apellido1,apellido2,nacionalidad)
+        //agregarTarjetaIniciales(nombre,apellido1,apellido2,nacionalidad)
         
     } else {
         alert("Debe rellenar todos los campos")
@@ -186,6 +184,7 @@ function validlength(name, lengthmax, lengthmin) {
         aviso.style.color = "green"
         aviso.innerText = "Dinero retirado correctamente: "+saldoRetirar
         cuentaBancaria.saldo -= saldoRetirar
+        console.log(cuentaBancaria  )
         cargarDatos() 
       }
     }else{
@@ -208,9 +207,6 @@ function validlength(name, lengthmax, lengthmin) {
     }   
   }
   
-  function cargarDatosIndex(){  
-    menu = document.getElementById('menu').innerHTML
-  }
   
   function cargarDatos(){
       document.getElementById("iban").value = cuentaBancaria.iban
@@ -224,11 +220,14 @@ function validlength(name, lengthmax, lengthmin) {
   
   //tarjetas.html
 
+  
+
   function mostrarTarjetas(){ 
     var tabla = document.getElementById('tarjetas').getElementsByTagName('tbody')[0];
-    for (var i = 0; i < cuentaBancaria.tarjetas.length; i++) {
+    
+    for(let i = 0; i<cuentaBancaria.tarjetas.length; i++){
       var row = tabla.insertRow(tabla.rows.length);
-  
+    
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);    
@@ -236,7 +235,8 @@ function validlength(name, lengthmax, lengthmin) {
       cell1.innerHTML = cuentaBancaria.iban; 
       cell2.innerHTML = cuentaBancaria.tarjetas[i].numero;
       cell3.innerHTML = cuentaBancaria.tarjetas[i].activa;
-    }
+    }      
+    
   }
 
   function agregarTarjeta() {
@@ -252,9 +252,15 @@ function validlength(name, lengthmax, lengthmin) {
     if (activa) {
       activaTexto = "Si";
     }
+
+    if(numeroTarjeta != "" && cvv != ""){
+      var tarjeta = new Tarjeta(numeroTarjeta,cvv,activaTexto)
+      persona.cuentaBancaria.agregarTarjeta(tarjeta);
+    }
   
-    persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activa));
-    mostrarTarjetas();
+    
+    console.log(cuentaBancaria)
+    //mostrarTarjetas();
 
   }
 
