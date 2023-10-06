@@ -3,6 +3,8 @@
 <head>
     <title>BancoPuertollano</title>
     <link rel="stylesheet" type="text/css" href="estilos.css" />
+    <script src="app.js"></script>
+    <script> mostrarUsuario()</script> 
 </head>
 <body>
     <div id="menu">
@@ -10,7 +12,7 @@
         <ul >
             <li><a href="index.html">Inicio</a></li>
             <li><a href="infoCuenta.html">Informacion Cuenta</a></li>
-            <li><a href="tarjetas.html">Tarjetas</a></li>
+            <li><a href="tarjetas.html" >Tarjetas</a></li>
         </ul>
     </div>
     <title>Modificar Datos</title>
@@ -30,7 +32,7 @@
         <label for="nacionalidad">Nacionalidad:</label>
         <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Escribe tu nacionalidad" required><br><br>
 
-        <button  type="button" onclick="compareLogin()" id="modificar">Modificar Datos</button>
+        <button  type="button" onclick="modificarUsuario()" id="modificar">Modificar Datos</button>
     </form>
 
     <div id="mensaje_error" style="color: red;"></div>
@@ -38,10 +40,8 @@
     <div id="mensaje_error3" style="color: red;"></div>
     <div id="mensaje_error4" style="color: red;"></div>
 
-<script src="app.js">
 
     
-</script>
 <script>
     cargarDatosIndex()
 </script>
