@@ -3,6 +3,7 @@
 <head>
     <title>BancoPuertollano</title>
     <link rel="stylesheet" type="text/css" href="estilos.css" />
+    <script> mostrarTarjetas()</script> 
 </head>
 <body>
     <div id="menu">
@@ -14,37 +15,43 @@
         </ul>
     </div>
     <h2>Gestión de Tarjetas</h2>
-    <div id="tarjetas"> 
-        <div id="columnas"> 
-                <div class="columna">
-                    <p>Número de Cuenta</p>
-                </div>
-                <div class="columna">
-                    <p>Número de Tarjeta</p>
-                </div>
-                <div class="columna">
-                    <p>Activa  </p>
-                </div>
-        </div>
-        <p id="fila1">ES21 1465 0100 72 2030876293  1234 12345 123456  Si</p>
-        <p id="fila2">ES21 1465 0100 72 2030876293  1234 12345 123456  No</p>
-    </div>
+    <table id="tarjetas">
+        <thead>
+          <tr>
+            <th>Número de Cuenta</th>
+            <th>Número de Tarjeta</th>
+            <th>Activa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ES21 1465 0100 72 2030876293</td>
+            <td>1234 12345 123456</td>
+            <td>Si</td>
+          </tr>
+          <tr>
+            <td>ES21 1465 0100 72 2030876293</td>
+            <td>1234 12345 123456</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
 
     <h2>Agregar Tarjetas</h2>
     <form id="tarjeta-form">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br><br>
+        <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta"   pattern="/^\d{4} \d{5} \d{6}" required></br><br>
 
         <label for="cvv">CVV:</label>
-        <input type="password" id="cvv" name="cvv" required><br><br>
+        <input type="text" id="cvv" placeholder="CVV (3 dígitos)" pattern="\d{3}" required></br><br>
 
         <label for="activa">Activar:</label>
         <input type="checkbox" id="activa" name="activa"><br><br>
 
-        <button type="button" id="guardar">Guardar Tarjeta</button>
+        <button id="agregar-btn" onclick="agregarTarjeta()" on id="guardar">Guardar Tarjeta</button>
     </form>
     </div>
-    
+    <script src="app.js"></script>
 </body>
 
 </html>
