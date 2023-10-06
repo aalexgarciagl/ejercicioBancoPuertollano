@@ -244,15 +244,31 @@ function validlength(name, lengthmax, lengthmin) {
     var cvv = document.getElementById('cvv').value;
     var activa = document.getElementById('activa').checked;
     
-    var activaTexto = "No";
-    if (activa) {
-      activaTexto = "Si";
+    var activaTexto = "No"
+    if(activa){
+      activaTexto = "Si"
     }
   
-    persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activaTexto));
+    if(validarTarjeta(numeroTarjeta,cvv)){
+      persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activaTexto));
+    }
+
+
     mostrarTarjetas();
 
   }
+
+function validarTarjeta(numero,cvv){
+  var numRegExp = /^\d{4}\s\d{5}\s\d{6}$/
+  var cvvRegExp = /^\d{3}$/
+
+  if(numRegExp.test(numero) && cvvRegExp.test(cvv)){
+    return true
+  }else{
+    return false
+  }
+
+}
 
   
   
