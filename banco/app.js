@@ -249,7 +249,7 @@ function validlength(name, lengthmax, lengthmin) {
       activaTexto = "Si";
     }
   
-    persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activa));
+    persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activaTexto));
     mostrarTarjetas();
 
   }
