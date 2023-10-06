@@ -225,16 +225,13 @@ function validlength(name, lengthmax, lengthmin) {
     var tabla = document.getElementById('tarjetas').getElementsByTagName('tbody')[0];
     var ultimaTarjeta=cuentaBancaria.tarjetas.length-1
       var row = tabla.insertRow(tabla.rows.length);
-
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
   
-
       cell1.innerHTML = cuentaBancaria.iban;
       cell2.innerHTML = cuentaBancaria.tarjetas[ultimaTarjeta].numero;
       cell3.innerHTML = cuentaBancaria.tarjetas[ultimaTarjeta].activa;
-
     
   }
 
@@ -251,17 +248,11 @@ function validlength(name, lengthmax, lengthmin) {
     if (activa) {
       activaTexto = "Si";
     }
-
-    if(numeroTarjeta != "" && cvv != ""){
-      var tarjeta = new Tarjeta(numeroTarjeta,cvv,activaTexto)
-      persona.cuentaBancaria.agregarTarjeta(tarjeta);
-    }
   
-    
-    console.log(cuentaBancaria)
-    //mostrarTarjetas();
+    persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activa));
+    mostrarTarjetas();
 
-  }
+  }
 
   
   
