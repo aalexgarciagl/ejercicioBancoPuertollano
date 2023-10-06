@@ -224,19 +224,18 @@ function validlength(name, lengthmax, lengthmin) {
   
   //tarjetas.html
 
-  function mostrarTarjetas(){ 
+  function mostrarTarjetas() {
     var tabla = document.getElementById('tarjetas').getElementsByTagName('tbody')[0];
-    for (var i = 0; i < cuentaBancaria.tarjetas.length; i++) {
+    var ultimaTarjeta=cuentaBancaria.tarjetas.length-1
       var row = tabla.insertRow(tabla.rows.length);
-  
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);    
+      var cell3 = row.insertCell(2);
   
-      cell1.innerHTML = cuentaBancaria.iban; 
-      cell2.innerHTML = cuentaBancaria.tarjetas[i].numero;
-      cell3.innerHTML = cuentaBancaria.tarjetas[i].activa;
-    }
+      cell1.innerHTML = cuentaBancaria.iban;
+      cell2.innerHTML = cuentaBancaria.tarjetas[ultimaTarjeta].numero;
+      cell3.innerHTML = cuentaBancaria.tarjetas[ultimaTarjeta].activa;
+    
   }
 
   function agregarTarjeta() {
