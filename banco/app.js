@@ -261,4 +261,90 @@ function validlength(name, lengthmax, lengthmin) {
   
   
   
+  function mostrarTarjetas(){ 
+    persona=recuperarPersona()
+
+      cuentaBancaria = persona.cuentaBancaria
+    var tabla = document.getElementById('tarjetas').getElementsByTagName('tbody')[0]
+    tabla.innerHTML = ''
+    for (var i = 0; i < cuentaBancaria.tarjetas.length; i++) {
+      var row = tabla.insertRow(tabla.rows.length)
   
+      var cell1 = row.insertCell(0)
+      var cell2 = row.insertCell(1)
+      var cell3 = row.insertCell(2)
+  
+      cell1.innerHTML = cuentaBancaria.iban; 
+      cell2.innerHTML = cuentaBancaria.tarjetas[i].numero
+      cell3.innerHTML = cuentaBancaria.tarjetas[i].activa
+    }
+  }
+
+  function agregarTarjeta() {
+    persona=recuperarPersona()
+    
+  
+    var numeroTarjeta = document.getElementById('numero-tarjeta').value
+    var cvv = document.getElementById('cvv').value
+    var activa = document.getElementById('activa').checked
+    var activaTexto = "No"
+    if (activa) {
+      activaTexto = "Si"
+    }
+    if (numeroTarjeta == "" && cvv == "" ){
+      camposVacios()    
+    }else if (validarTarjeta(numeroTarjeta,cvv)) {
+    persona.cuentaBancaria.tarjetas.push(new Tarjeta(numeroTarjeta,cvv,activaTexto))
+    guardarPersona(persona)
+    mostrarTarjetas()
+    }
+  }
+
+  function validarTarjeta(numero, cvv) {
+    var numRegExp = /^\d{4}\s\d{5}\s\d{6}$/
+    var cvvRegExp = /^\d{3}$/
+    var validacion = true
+    var fallos = 0
+    const mensajeError = document.getElementById("mensaje_error")
+    const mensajeError2 = document.getElementById("mensaje_error2")
+    mensajeError.textContent = ""
+    mensajeError2.textContent = ""
+
+    if (!numRegExp.test(numero)) {
+        mensajeError.textContent = "El número de tarjeta no es válido"
+        fallos++
+    }
+
+    if (!cvvRegExp.test(cvv)) {
+        mensajeError2.textContent = "El CVV no es válido"
+        fallos++
+    }
+
+    if (fallos > 0) {
+        validacion = false
+    }
+
+    return validacion
+}
+function camposVacios() {
+  abrirDialogo()
+  document.addEventListener("click", cerrarSiClicFuera)
+}
+
+function abrirDialogo() {
+  var dialogo = document.getElementById("miDialogo")
+  dialogo.showModal()
+}
+
+function cerrarDialogo() {
+  var dialogo = document.getElementById("miDialogo")
+  dialogo.close()
+}
+
+function cerrarSiClicFuera(event) {
+  var dialogo = document.getElementById("miDialogo")
+  if (event.target == dialogo) {
+      cerrarDialogo()
+      document.removeEventListener("click", cerrarSiClicFuera)
+  }
+}
