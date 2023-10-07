@@ -2,14 +2,20 @@
 class Cuenta{
     iban
     saldo
-    tarjetas 
+    tarjetas =[]
   
     constructor(iban,saldo,tarjetas){
       this.iban = iban
       this.saldo = saldo
       this.tarjetas = tarjetas
     }
-
+    toJSON() {
+      return {
+          iban: this.iban,
+          saldo: this.saldo,
+          tarjetas: this.tarjetas.map(tarjeta => tarjeta.toJSON())
+      };
+  }
     getIban(){
       return this.iban
     }
@@ -38,21 +44,15 @@ class Cuenta{
       this.nacionalidad = nacionalidad
       this.cuentaBancaria = cuentaBancaria
     }
-
-    setNombre(nombre){
-      this.nombre = nombre
-    }
-
-    setPApe(pApe){
-      this.pApe = pApe
-    }
-
-    setSApe(sApe){
-      this.sApe = sApe
-    }
-    setNacionalidad(nacionalidad){
-      this.nacionalidad = nacionalidad
-    }
+    toJSON() {
+      return {
+          nombre: this.nombre,
+          pApe: this.pApe,
+          sApe: this.sApe,
+          nacionalidad: this.nacionalidad,
+          cuentaBancaria: this.cuentaBancaria.toJSON()
+      };
+  }
     
   }
   
@@ -66,25 +66,60 @@ class Cuenta{
       this.cvv = cvv
       this.activa = activa
     }
+    toJSON() {
+      return {
+          numero: this.numero,
+          cvv: this.cvv,
+          activa: this.activa
+      };
+  }
   }
 
   //Creacion de usuario
 
   
 function crearCuenta() {
-  //los setters y el metodo agregarTarjeta se usara luego en las funciones de tarjeta.html
-  var tarjetaInicial1= new Tarjeta("1234 12345 123456	","123",true)
-  var tarjetaInicial2= new Tarjeta("1234 12345 123457	","123",false)
+  var tarjetaInicial1= new Tarjeta("1234 12345 123456	","123","Si")
+  var tarjetaInicial2= new Tarjeta("1234 12345 123457	","123","No")
   var cuentaBancaria = new Cuenta("ES21 1465 0100 72 2030876293",500,[tarjetaInicial1,tarjetaInicial2]) 
   return cuentaBancaria
 }
-cuentaBancaria = crearCuenta()
-var persona = new Persona("Lolito","Fernandez","Gill","Sueco",cuentaBancaria)
+
+function crearPersona(){
+  if( recuperarPersona() != null){
+    persona = recuperarPersona()
+  }else{
+    cuentaBancaria = crearCuenta()
+    var persona = new Persona("Lolito","Fernandez","Gill","Sueco",cuentaBancaria)  
+    guardarPersona(persona)
+  }
+  return persona
+} 
+  
+
+function guardarPersona(persona){
+  var personaString = JSON.stringify(persona);
+  localStorage.setItem("persona",personaString)
+}
+
+function recuperarPersona(){
+var personaString = localStorage.getItem("persona")
+var persona = JSON.parse(personaString)
+return persona
+}
+
+
 
 
   //index.html
+  function cargarDatosIndex(){  
+    mostrarUsuario()
+    menu = document.getElementById('menu').innerHTML
+
+  }
 
   function mostrarUsuario(){
+    persona=crearPersona()
     document.getElementById("nombre").value = persona.nombre
     document.getElementById("apellido1").value = persona.pApe
     document.getElementById("apellido2").value = persona.sApe
@@ -98,6 +133,11 @@ var persona = new Persona("Lolito","Fernandez","Gill","Sueco",cuentaBancaria)
     var nacionalidad = document.getElementById('nacionalidad').value
     const mensajeError = document.getElementById("mensaje_error")
     if(validarCampos(nombre,apellido1,apellido2,nacionalidad)){   
+      persona.nombre = nombre
+      persona.pApe = apellido1
+      persona.sApe = apellido2
+      persona.nacionalidad = nacionalidad
+      guardarPersona(persona)
       mensajeError.style.color = "green"
       mensajeError.textContent = "Guardado los datos correctamente."
       console.log(persona)
@@ -136,9 +176,8 @@ function validarCampos(nombre,apellido1,apellido2,nacionalidad) {
         if (validlength(nacionalidad, 15, 3) !== "") { 
             mensajeError4.textContent = ("El campo nacionalidad" + validlength(nacionalidad, 15, 3)) 
             fallos++
-        }
-        agregarTarjetaIniciales(nombre,apellido1,apellido2,nacionalidad)
-        
+        }        
+
     } else {
         alert("Debe rellenar todos los campos")
         fallos++
@@ -180,12 +219,13 @@ function validlength(name, lengthmax, lengthmin) {
     var aviso = document.getElementById("avisoDineroIngresado/Retirado")
     if(/^\d+(\.\d+)?$/.test(saldoRetirar)){    
       if(saldoRetirar>cuentaBancaria.saldo){
-        aviso.style.color = "red";
+        aviso.style.color = "red"
         aviso.innerText = "Saldo insuficiente."
       }else{
         aviso.style.color = "green"
         aviso.innerText = "Dinero retirado correctamente: "+saldoRetirar
         cuentaBancaria.saldo -= saldoRetirar
+        guardarPersona(persona)
         cargarDatos() 
       }
     }else{
@@ -201,6 +241,7 @@ function validlength(name, lengthmax, lengthmin) {
       aviso.style.color = "green"
       aviso.innerText = "Dinero ingresado correctamente: "+saldoIngresar
       cuentaBancaria.saldo = parseInt(cuentaBancaria.saldo)+parseInt(saldoIngresar)
+      guardarPersona(persona)
       cargarDatos()     
     }else{
       aviso.style.color = "red"
@@ -208,11 +249,10 @@ function validlength(name, lengthmax, lengthmin) {
     }   
   }
   
-  function cargarDatosIndex(){  
-    menu = document.getElementById('menu').innerHTML
-  }
-  
+
   function cargarDatos(){
+      persona=recuperarPersona()
+      cuentaBancaria = persona.cuentaBancaria
       document.getElementById("iban").value = cuentaBancaria.iban
       document.getElementById("saldo").value = cuentaBancaria.saldo
       menu = document.getElementById('menu').innerHTML
@@ -224,43 +264,6 @@ function validlength(name, lengthmax, lengthmin) {
   
   //tarjetas.html
 
-  function mostrarTarjetas(){ 
-    var tabla = document.getElementById('tarjetas').getElementsByTagName('tbody')[0];
-    for (var i = 0; i < cuentaBancaria.tarjetas.length; i++) {
-      var row = tabla.insertRow(tabla.rows.length);
-  
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);    
-  
-      cell1.innerHTML = cuentaBancaria.iban; 
-      cell2.innerHTML = cuentaBancaria.tarjetas[i].numero;
-      cell3.innerHTML = cuentaBancaria.tarjetas[i].activa;
-    }
-  }
-
-  function agregarTarjeta() {
-    if (numeroTarjeta == "" || cvv == "") {
-      alert("Debe rellenar todos los campos");
-    }
-  
-    var numeroTarjeta = document.getElementById('numero-tarjeta').value;
-    var cvv = document.getElementById('cvv').value;
-    var activa = document.getElementById('activa').checked;
-    
-    var activaTexto = "No";
-    if (activa) {
-      activaTexto = "Si";
-    }
-  
-    persona.cuentaBancaria.agregarTarjeta(new Tarjeta(numeroTarjeta,cvv,activa));
-    mostrarTarjetas();
-
-  }
-
-  
-  
-  
   function mostrarTarjetas(){ 
     persona=recuperarPersona()
 
@@ -348,3 +351,6 @@ function cerrarSiClicFuera(event) {
       document.removeEventListener("click", cerrarSiClicFuera)
   }
 }
+
+
+
