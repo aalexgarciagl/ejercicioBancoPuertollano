@@ -5,10 +5,55 @@
     <link rel="stylesheet" type="text/css" href="estilos.css" />
 </head>
 <body>
+  <script src="app.js"></script>
     <div id="menu">
-       
+        <h1>BancoPuertollano</h1>
+        <ul >
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="infoCuenta.html">Información Cuenta</a></li>
+            <li><a href="tarjetas.html">Tarjetas</a></li>
+        </ul>
     </div>
-    
+    <h2>Gestión de Tarjetas</h2>
+    <table id="tarjetas">
+        <thead>
+          <tr>
+            <th>Número de Cuenta</th>
+            <th>Número de Tarjeta</th>
+            <th>Activa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            
+          </tr>
+          <tr>
+            
+          </tr>
+        </tbody>
+      </table>
+
+    <h2>Agregar Tarjetas</h2>
+    <form id="tarjeta-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta"   required></br><br>
+
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" placeholder="CVV (3 dígitos)"  required></br><br>
+
+        <label for="activa">Activar:</label>
+        <input type="checkbox" id="activa" name="activa"> <br><br>
+
+        <button id="agregar-btn" onclick="agregarTarjeta()"  id="guardar"  type="button">Guardar Tarjeta</button>
+    </form>
+    <div id="mensaje_error" style="color: red;"></div>
+    <div id="mensaje_error2" style="color: red;"></div>
+    <dialog id="miDialogo">
+      <h2>Error</h2>
+      <p>Todos los campos deben estar rellenos.</p>
+    </dialog>
+    <script> mostrarTarjetas()</script> 
+    </div>
 </body>
 
 </html>
